@@ -1,9 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Core.Helpers;
+using NUnit.Framework;
 using ProjectToTest;
-using ProjectToTest.pages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TestProject.ExamplePageTest
 {
@@ -11,14 +8,15 @@ namespace TestProject.ExamplePageTest
     [Parallelizable]
     public class HomePageTest
     {
-        public TestContext TestContext { get; set; }
-        //private ReportHelper reportHelper = new ReportHelper();
-        
+        public TestContext testContext; //{ get; set; }
+        private ReportHelper reportHelper = new ReportHelper();
+
         [SetUp]        
         public void Initialize()
         {
             Pages.HomePage.GoTo();
-            //reportHelper.Start(TestContext);
+            testContext = TestContext.CurrentContext;
+            reportHelper.Start(testContext);
         }
 
         [Test]        
@@ -39,7 +37,7 @@ namespace TestProject.ExamplePageTest
         [TearDown]
         public void CleanUp()
         {
-            //reportHelper.GenerateReport(TestContext);
+            reportHelper.GenerateReport(testContext);
             Pages.HomePage.Quit();
         }
     }

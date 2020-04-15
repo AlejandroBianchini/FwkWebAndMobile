@@ -12,6 +12,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Pages", "02.Pages", "{2DD399D0-E248-4192-8081-8BEF3C1A4FF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.Test", "03.Test", "{3A4A3417-B74C-421F-B3E7-D1FB6C1BADE7}"
+	ProjectSection(SolutionItems) = preProject
+		Test\App.config = Test\App.config
+		Core\appsettings.json = Core\appsettings.json
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagesProject", "PagesProject\PagesProject.csproj", "{B3DDD70A-93BC-487E-8D35-2C2B0356A258}"
 EndProject
