@@ -1,9 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
-using System;
-using System.Configuration;
 
 namespace Core.Helpers
 {
@@ -11,14 +10,12 @@ namespace Core.Helpers
     {
         public static IWebDriver FactoryDriver()
         {
-            //var path = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["DriversPath"];
-            //var type = ConfigurationManager.AppSettings.Get("WebDriverType");
-            //var headdless = ConfigurationManager.AppSettings["headdless"];
+            AppSettingsConfiguration appSettings = new AppSettingsConfiguration();
 
-            var path = AppDomain.CurrentDomain.BaseDirectory + @"\Drivers";
-            var type = "Chrome";
-            var headdless = "False";
-
+            String path = AppDomain.CurrentDomain.BaseDirectory + appSettings.DriverPath;
+            String type = appSettings.WebDriverType;
+            Boolean headdless = Convert.ToBoolean(appSettings.Headdless);
+         
             switch (type)
             {
                 case "FireFox":
@@ -28,7 +25,7 @@ namespace Core.Helpers
                 case "Chrome":
                     ChromeOptions options = new ChromeOptions();
                     options.AddArgument("start-maximized");
-                    if (Boolean.Parse(headdless))
+                    if (headdless)
                     {
                         options.AddArgument("headless");
                         options.AddArgument("window-size=1920,1080");

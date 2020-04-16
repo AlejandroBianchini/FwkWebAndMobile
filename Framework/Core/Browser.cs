@@ -49,7 +49,7 @@ namespace Core
         public static void Quit()
         {
             webDriver.Close();
-            //KillDriverProcesses();
+            KillDriverProcesses();
         }
 
         private static void KillDriverProcesses()

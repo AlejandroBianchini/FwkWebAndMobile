@@ -14,9 +14,9 @@ namespace TestProject.ExamplePageTest
         [SetUp]        
         public void Initialize()
         {
-            Pages.HomePage.GoTo();
+            Pages.HomePage.Initializes();
             testContext = TestContext.CurrentContext;
-            reportHelper.Start(testContext);
+            
         }
 
         [Test]        
@@ -37,6 +37,7 @@ namespace TestProject.ExamplePageTest
         [TearDown]
         public void CleanUp()
         {
+            reportHelper.Start(testContext);
             reportHelper.GenerateReport(testContext);
             Pages.HomePage.Quit();
         }

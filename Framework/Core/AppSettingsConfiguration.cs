@@ -20,11 +20,14 @@ namespace Core
             .AddJsonFile(path, false)
             .Build();
 
-            var appSetting = config.GetSection("ConfigSection");
+            var appSetting = config.GetSection("ReportSection");
+            htmlReportsPath = appSetting["HtmlReportsPath"];
+
+            appSetting = config.GetSection("DriverSection");
             driverPath = appSetting["DriverPath"];
             webDriverType = appSetting["WebDriverType"];
             headdless = appSetting["Headdless"];
-            htmlReportsPath = appSetting["HtmlReportsPath"];
+            
         }
 
         public string DriverPath

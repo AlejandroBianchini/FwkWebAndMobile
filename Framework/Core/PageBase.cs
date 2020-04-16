@@ -18,6 +18,12 @@ namespace Core
             Url = url;
         }       
 
+        public void Initializes()
+        {
+            Browser.Initializes();
+            GoTo();
+        }
+
         public void Action(Navigation.NavigationActions action)
         {
             Browser.Action(action);
