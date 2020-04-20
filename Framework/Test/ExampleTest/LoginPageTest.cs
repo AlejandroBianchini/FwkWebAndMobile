@@ -5,7 +5,7 @@ using ProjectToTest;
 namespace TestProject.ExamplePageTest
 {
     [TestFixture]
-    public class HomePageTest
+    public class LoginPageTest
     {
         private TestContext testContext;
         private ReportHelper reportHelper = new ReportHelper();
@@ -13,21 +13,16 @@ namespace TestProject.ExamplePageTest
         [SetUp]        
         public void Initialize()
         {
-            Pages.HomePage.Initializes();
-            testContext = TestContext.CurrentContext;            
+            Pages.LoginPage.Initializes();
+            testContext = TestContext.CurrentContext;
+            
         }
 
         [Test]        
-        public void TestReport()
-        {
-            Pages.HomePage.BuscarGoogle("Selenium");
-            Assert.IsTrue(true);
-        }
-
-        [Test]
-        public void TestReport2()
-        {
-           
+        public void TestReportLoginPage()
+        {            
+            Pages.LoginPage.BuscarGoogle("Selenium");
+            Pages.HomePage.BuscarGoogle("nada");
             Assert.IsTrue(true);
         }
 
@@ -35,7 +30,7 @@ namespace TestProject.ExamplePageTest
         public void CleanUp()
         {
             reportHelper.GenerateReport(testContext);
-            Pages.HomePage.Quit();
+            Pages.LoginPage.Quit();
         }
     }
 }

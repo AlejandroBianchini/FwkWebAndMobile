@@ -1,10 +1,7 @@
-﻿using Core.Enums;
-using Core.Helpers;
-using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Core.Enums;
+using OpenQA.Selenium;
 
 namespace Core
 {
@@ -69,17 +66,6 @@ namespace Core
             return Browser.FindElementIfExists(by);
         }
 
-        public void PressBtn(IWebElement boton)
-        {
-            boton.Click();
-        }
-
-        public void PressBtn(IWebElement boton1, IWebElement boton2)
-        {
-            boton1.Click();
-            boton2.Click();
-        }
-
         public IWebElement Find(By objeto)
         {
             return ExplicitWait(10, x => x.FindElement(objeto));
@@ -95,17 +81,6 @@ namespace Core
             Browser.MoveToElement(elem);
         }
 
-        public void DragAndDrop(IWebElement elem1, IWebElement elem2)
-        {
-            Browser.DragAndDrop(elem1, elem2);
-        }
-
-        public virtual void CompleteField(IWebElement element, String documento)
-        {
-            Browser.CompleteField(element, documento);
-
-        }
-
         public virtual void JavaScript(String jav)
         {
             Browser.Javas(jav);
@@ -113,7 +88,7 @@ namespace Core
 
         public static string PagesSource()
         {
-            return Browser.CodigoPage();
+            return Browser.PageSource();
         }
 
         public virtual void Scroll(string i = null)

@@ -29,26 +29,16 @@ namespace Core.Helpers
             _instance.AttachReporter(htmlReport);                  
         }
 
-        protected AventStack.ExtentReports.ExtentReports ExtentReport
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        protected AventStack.ExtentReports.ExtentReports ExtentReport => _instance;
 
-        protected ExtentTest test;
-
-        public void Start(TestContext testContext, string TestName = "")
+        public void GenerateReport(TestContext testContext, string TestName = "")
         {
+            ExtentTest test;
             if (!string.IsNullOrEmpty(TestName))
                 test = ExtentReport.CreateTest(testContext.Test.Name + " - " + TestName);
             else
                 test = ExtentReport.CreateTest(testContext.Test.Name);
-        }
 
-        public void GenerateReport(TestContext testContext)
-        {
             this.ConfigureDirectories();
             var status = testContext.Result.Outcome.Status;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("es-ES");
@@ -109,8 +99,8 @@ namespace Core.Helpers
         }
 
         /// <summary>
-        /// Agrega una captura de pantalla del aplicativo del momento.
-        /// Opcionalmente se puede agregar un detalle que describa a la acción de la imagen.
+        /// Add screenshot of the current execution moment.
+        /// Can add details as string (optionally).
         /// </summary>
         /// <param name="imageName"></param>
         /// <param name="details"></param>
@@ -125,17 +115,10 @@ namespace Core.Helpers
             imagesAndDetails.Add(imgDetails);
         }
 
-        //[SetUp]
-        //public void Initialize()
-        //{
-        //    Browser.Initializes();
-        //}
-
         [TearDown]
         public void CleanUp()
         {
             this.GenerateReport(TestContext);
-            //Browser.Quit();
         }
     }
 }

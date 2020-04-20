@@ -12,5 +12,10 @@ namespace ProjectToTest
         {
             get { return PageFactoryHelper.InitElements<HomePage>(); }
         }
+
+        public static LoginPage LoginPage
+        {
+            get { return PageFactoryHelper.InitElements<LoginPage>(); }
+        }
     }
 }

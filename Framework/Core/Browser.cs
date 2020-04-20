@@ -3,7 +3,6 @@ using Core.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -19,13 +18,12 @@ namespace Core
         private const String CHROME_DRIVER = "chromedriver";
         private const String INTERNET_EXPLORER_DRIVER_SERVER = "iedriverserver";
         public static IWebDriver webDriver = DriverHelper.FactoryDriver();
-        //public static IWebDriver webDriver;
 
         public static ISearchContext Driver
         {
             get
             {
-                return webDriver;// = DriverHelper.FactoryDriver();
+                return webDriver;
             }
         }
 
@@ -48,7 +46,7 @@ namespace Core
 
         public static void Quit()
         {
-            webDriver.Close();
+            webDriver.Quit();
             KillDriverProcesses();
         }
 
@@ -142,24 +140,10 @@ namespace Core
             select.Perform();
         }
 
-        public static void DragAndDrop(IWebElement elemento1, IWebElement elemento2)
-        {
-            Actions select = new Actions(webDriver);
-            select.DragAndDrop(elemento1, elemento2);
-            select.Perform();
-        }
-
-        internal static void CompleteField(IWebElement element, string documento)
-        {
-            Actions accion = new Actions(webDriver);
-
-            accion.MoveToElement(element);
-            accion.Click(element);
-            accion.SendKeys(element, documento + "\n");
-            accion.Perform();
-        }
-
-        public static void CerrarVentana()
+        /// <summary>
+        /// Close de current Window.
+        /// </summary>
+        public static void CloseWindows()
         {
             webDriver.Close();
         }
@@ -189,8 +173,8 @@ namespace Core
         }
 
         /// <summary>
-        /// Recibe string con valor numerico. valores positivas hace scroll down. valores negativos scroll up
-        /// Por defecto scrool down = "450".
+        /// Scroll in the current screen. Must be indicate the value in porcents. Positives values make scroll down and negatives values make scroll up (optional).
+        /// For default will make are scroll down of 50%.
         /// </summary>
         /// <param name="i"></param>
         public static void Scroll(string i = null)
@@ -199,10 +183,14 @@ namespace Core
             {
                 i = "450";
             }
+            else
+            {
+                i = Convert.ToString(10000 / Convert.ToInt32(i)); 
+            }
             Javas($"window.scrollBy(0,{i})");
         }
 
-        public static string CodigoPage()
+        public static string PageSource()
         {
             return webDriver.PageSource;
         }

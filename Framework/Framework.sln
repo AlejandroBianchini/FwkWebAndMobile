@@ -3,21 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BDDED6BD-A7CC-4811-9789-F93876BF0485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{BDDED6BD-A7CC-4811-9789-F93876BF0485}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Core", "01.Core", "{F39302E4-3F88-425E-8C3D-B949D9AE6815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{72B96778-D33B-4102-8F53-9FCE2B053481}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{72B96778-D33B-4102-8F53-9FCE2B053481}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Pages", "02.Pages", "{2DD399D0-E248-4192-8081-8BEF3C1A4FF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.Test", "03.Test", "{3A4A3417-B74C-421F-B3E7-D1FB6C1BADE7}"
-	ProjectSection(SolutionItems) = preProject
-		Test\App.config = Test\App.config
-		Core\appsettings.json = Core\appsettings.json
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagesProject", "PagesProject\PagesProject.csproj", "{B3DDD70A-93BC-487E-8D35-2C2B0356A258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PagesProject", "PagesProject\PagesProject.csproj", "{B3DDD70A-93BC-487E-8D35-2C2B0356A258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
