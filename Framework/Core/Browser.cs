@@ -3,6 +3,7 @@ using Core.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -17,7 +18,7 @@ namespace Core
         private const String INTERNET_EXPLORER_DRIVER = "internetexplorerdriver";
         private const String CHROME_DRIVER = "chromedriver";
         private const String INTERNET_EXPLORER_DRIVER_SERVER = "iedriverserver";
-        public static IWebDriver webDriver = DriverHelper.FactoryDriver();
+        public static IWebDriver webDriver;
 
         public static ISearchContext Driver
         {
@@ -25,6 +26,12 @@ namespace Core
             {
                 return webDriver;
             }
+        }
+
+        public static void PageInit(IWebDriver driver, object page)
+        {
+            webDriver = driver;
+            PageFactory.InitElements(Driver, page);
         }
 
         public static void GoTo(string url)
@@ -38,16 +45,16 @@ namespace Core
                 path = ConfigurationManager.AppSettings["DefaultImagePath"];
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-
+           
             var file = path + fileName + "." + imageFormat.ToString();
             Screenshot ss = ((ITakesScreenshot)webDriver).GetScreenshot();
-            ss.SaveAsFile(file, imageFormat);
+            ss.SaveAsFile(file);
         }
 
         public static void Quit()
         {
             webDriver.Quit();
-            KillDriverProcesses();
+            //KillDriverProcesses();
         }
 
         private static void KillDriverProcesses()
@@ -101,19 +108,19 @@ namespace Core
             }
         }
 
-        public static void Initializes(bool maximized = true)
-        {
-            try
-            {
-                if (maximized)
-                    Browser.webDriver.Manage().Window.Maximize();
-            }
-            catch
-            {
-                webDriver = DriverHelper.FactoryDriver();
-                Initializes();
-            }
-        }
+        //public static void Initializes(bool maximized = true)
+        //{
+        //    try
+        //    {
+        //        if (maximized)
+        //            Browser.webDriver.Manage().Window.Maximize();
+        //    }
+        //    catch
+        //    {
+        //        webDriver = DriverHelper.FactoryDriver();
+        //        Initializes();
+        //    }
+        //}
 
         public static void Action(Navigation.NavigationActions action)
         {

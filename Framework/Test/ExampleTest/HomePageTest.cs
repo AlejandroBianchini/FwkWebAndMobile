@@ -1,41 +1,52 @@
-﻿using Core.Helpers;
-using NUnit.Framework;
-using ProjectToTest;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using ProjectToTest.pages;
 
-namespace TestProject.ExamplePageTest
+namespace Test.ExamplePageTest
 {
     [TestFixture]
-    public class HomePageTest
+    public class HomePageTest : BaseTest
     {
-        private TestContext testContext;
-        private ReportHelper reportHelper = new ReportHelper();
+        TestContext testContext;        
+        HomePage HomePage;
+        IWebDriver driver;
 
         [SetUp]        
         public void Initialize()
         {
-            Pages.HomePage.Initializes();
-            testContext = TestContext.CurrentContext;            
+            testContext = TestContext.CurrentContext;
+            reportHelper.StartTest(testContext);                       
         }
 
-        [Test]        
-        public void TestReport()
+        [Test]               
+        [TestCaseSource(typeof(BaseTest), "BrowserToRunWith")]    
+        public void Test1(string browserName)
         {
-            Pages.HomePage.BuscarGoogle("Selenium");
+            driver = Setup(browserName);
+            HomePage = new HomePage(driver);
+
+            HomePage.GoTo();
+            HomePage.BuscarGoogle("Selenium");
             Assert.IsTrue(true);
         }
 
-        [Test]
-        public void TestReport2()
+        [Test]        
+        [TestCaseSource(typeof(BaseTest), "BrowserToRunWith")]
+        public void TestReport2(string browserName)
         {
-           
+            driver = Setup(browserName);
+            HomePage = new HomePage(driver);
+
+            HomePage.GoTo();
+            HomePage.BuscarGoogle("Segundo test");
             Assert.IsTrue(true);
         }
 
         [TearDown]
         public void CleanUp()
         {
-            reportHelper.GenerateReport(testContext);
-            Pages.HomePage.Quit();
+            reportHelper.AddTestToReport(testContext);
+            driver.Quit();
         }
     }
 }

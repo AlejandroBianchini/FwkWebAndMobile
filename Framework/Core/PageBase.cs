@@ -15,11 +15,16 @@ namespace Core
             Url = url;
         }       
 
-        public void Initializes()
+        public void PageInit(IWebDriver driver, object page)
         {
-            Browser.Initializes();
-            GoTo();
+            Browser.PageInit(driver, page);
         }
+
+        //public void Initializes()
+        //{
+        //    Browser.Initializes();
+        //    GoTo();
+        //}
 
         public void Action(Navigation.NavigationActions action)
         {

@@ -6,16 +6,16 @@ using System.Text;
 
 namespace ProjectToTest
 {
-    public static class Pages
-    {
-        public static HomePage HomePage
-        {
-            get { return PageFactoryHelper.InitElements<HomePage>(); }
-        }
+    //public static class Pages
+    //{
+    //    public static HomePage HomePage
+    //    {
+    //        get { return PageFactoryHelper.InitElements<HomePage>(); }
+    //    }
 
-        public static LoginPage LoginPage
-        {
-            get { return PageFactoryHelper.InitElements<LoginPage>(); }
-        }
-    }
+    //    public static LoginPage LoginPage
+    //    {
+    //        get { return PageFactoryHelper.InitElements<LoginPage>(); }
+    //    }
+    //}
 }

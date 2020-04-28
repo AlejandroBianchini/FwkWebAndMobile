@@ -9,9 +9,9 @@ namespace ProjectToTest.pages
         [FindsBy(How = How.Name, Using = "q")]
         private IWebElement searchBox;
 
-        public HomePage() : base("https://www.google.com.ar")
+        public HomePage(IWebDriver driver) : base("https://www.google.com.ar")
         {
-            
+            PageInit(driver, this);
         }
 
         public void BuscarGoogle(string text)

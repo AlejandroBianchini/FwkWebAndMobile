@@ -12,6 +12,8 @@ namespace Core
         private string webDriverType;
         private string headdless;
         private string htmlReportsPath;
+        private string remoteDriver;
+        private string remoteUrl;
 
         public AppSettingsConfiguration()
         {
@@ -27,7 +29,8 @@ namespace Core
             driverPath = appSetting["DriverPath"];
             webDriverType = appSetting["WebDriverType"];
             headdless = appSetting["Headdless"];
-            
+            remoteDriver = appSetting["RemoteDriver"];
+            remoteUrl = appSetting["RemoteUrl"];
         }
 
         public string DriverPath
@@ -48,6 +51,16 @@ namespace Core
         public string HtmlReportsPath
         {
             get => htmlReportsPath;
+        }
+
+        public string RemoteDriver
+        {
+            get => remoteDriver;
+        }
+
+        public string RemoteUrl
+        {
+            get => remoteUrl;
         }
     }
 }

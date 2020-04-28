@@ -9,6 +9,7 @@ using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
+using System.Collections.ObjectModel;
 
 namespace Core.Helpers
 {
@@ -26,20 +27,24 @@ namespace Core.Helpers
 
         public ReportHelper()
         {
-            _instance.AttachReporter(htmlReport);                  
-        }
+            _instance.AttachReporter(htmlReport);
+            this.ConfigureDirectories();
+        }        
 
         protected AventStack.ExtentReports.ExtentReports ExtentReport => _instance;
 
-        public void GenerateReport(TestContext testContext, string TestName = "")
-        {
-            ExtentTest test;
-            if (!string.IsNullOrEmpty(TestName))
-                test = ExtentReport.CreateTest(testContext.Test.Name + " - " + TestName);
-            else
-                test = ExtentReport.CreateTest(testContext.Test.Name);
+        private Collection<ExtentTest> testsCollection = new Collection<ExtentTest>();
+        ExtentTest test;
+        string testName;
 
-            this.ConfigureDirectories();
+        public void StartTest(TestContext testContext)
+        {
+            string testName = testContext.Test.Name.Replace('"', '_').Replace("(", "").Replace(")","").Trim();
+            test = ExtentReport.CreateTest(testName);
+        }
+
+        public void AddTestToReport(TestContext testContext)
+        {            
             var status = testContext.Result.Outcome.Status;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("es-ES");
 
@@ -71,7 +76,7 @@ namespace Core.Helpers
             {
                 try
                 {
-                    var _fileName = String.Format("errorTest_{0}_{1}", testContext.Test.Name, DateTime.Now.ToString("yyyyMMdd_HHmm"));
+                    var _fileName = String.Format("errorTest_{0}_{1}", testName, DateTime.Now.ToString("yyyyMMdd_HHmm"));
                     Browser.PrintScreen(_fileName, ScreenshotImageFormat.Jpeg, imgPath);
                     var file = ReporteImgPath + _fileName + "." + ScreenshotImageFormat.Jpeg;
                     test.Log(logstatus, "Snapshot below: " + test.AddScreenCaptureFromPath(file));
@@ -82,8 +87,78 @@ namespace Core.Helpers
                 }
             }
 
-            ExtentReport.Flush();
+            testsCollection.Add(test);
         }
+
+        public void GenerateReport()
+        {
+            foreach (var item in testsCollection)
+            {
+                ExtentReport.Flush();
+            }
+        }
+
+        //public void GenerateReport(Collection<TestContext> testsCollection, string TestName = "")
+        //{
+
+        //    foreach (var item in testsCollection)
+        //    {
+
+
+        //        ExtentTest test;
+
+        //        if (!string.IsNullOrEmpty(TestName))
+        //            test = ExtentReport.CreateTest(testContext.Test.MethodName + " - " + TestName);
+        //        else
+        //            test = ExtentReport.CreateTest(item.Test.MethodName);
+
+
+        //        var status = item.Result.Outcome.Status;
+        //        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("es-ES");
+
+        //        Status logstatus;
+
+        //        switch (status)
+        //        {
+        //            case TestStatus.Failed:
+        //                logstatus = Status.Fail;
+        //                break;
+        //            case TestStatus.Inconclusive:
+        //                logstatus = Status.Warning;
+        //                break;
+        //            default:
+        //                logstatus = Status.Pass;
+        //                break;
+        //        }
+
+        //        var testClassName = item.Test.ClassName.Split('.').Last();
+        //        test.AssignCategory(testClassName);
+        //        test.Log(logstatus, "El test ha finalizado con estado " + logstatus);
+
+        //        foreach (var ite in imagesAndDetails)
+        //        {
+        //            test.Log(Status.Info, ite[1], MediaEntityBuilder.CreateScreenCaptureFromPath(ReporteImgPath + ite[0]).Build());
+        //        }
+
+        //        if (logstatus == Status.Fail || logstatus == Status.Warning)
+        //        {
+        //            try
+        //            {
+        //                var _fileName = String.Format("errorTest_{0}_{1}", item.Test.Name, DateTime.Now.ToString("yyyyMMdd_HHmm"));
+        //                Browser.PrintScreen(_fileName, ScreenshotImageFormat.Jpeg, imgPath);
+        //                var file = ReporteImgPath + _fileName + "." + ScreenshotImageFormat.Jpeg;
+        //                test.Log(logstatus, "Snapshot below: " + test.AddScreenCaptureFromPath(file));
+        //            }
+        //            catch (Exception)
+        //            {
+        //                throw;
+        //            }
+        //        }
+
+        //        ExtentReport.Flush();
+
+        //    }
+        //}
 
         private void ConfigureDirectories()
         {
@@ -115,10 +190,5 @@ namespace Core.Helpers
             imagesAndDetails.Add(imgDetails);
         }
 
-        [TearDown]
-        public void CleanUp()
-        {
-            this.GenerateReport(TestContext);
-        }
     }
 }
