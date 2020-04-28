@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 namespace Test
 {
     [SetUpFixture]
-    [Parallelizable]
+    [Parallelizable(ParallelScope.Fixtures)]
     public class BaseTest
     {
         public ReportHelper reportHelper = new ReportHelper();
@@ -21,12 +21,12 @@ namespace Test
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            reportHelper.GenerateReport();
+            reportHelper.GenerateReport();            
         }
 
-        public static IEnumerable<String> BrowserToRunWith()
+        protected static IEnumerable<String> BrowserToRunWith()
         {
-            String[] browser = { "Chrome", "Firefox", "IExplorer" };
+            String[] browser = { "Chrome", "Firefox"};
 
             foreach (String b in browser)
             {
@@ -34,22 +34,9 @@ namespace Test
             }
         }
 
-        public IWebDriver Setup(String browser)
+        protected IWebDriver Setup(String browser)
         {
-            IWebDriver driver;
-            if (browser == "Chrome")
-            {
-                driver = DriverHelper.FactoryDriver(browser);
-            }
-            else if (browser == "Firefox")
-            {
-                driver = DriverHelper.FactoryDriver(browser);
-            }
-            else
-            {
-                driver = DriverHelper.FactoryDriver(browser);
-            }
-            return driver;
+            return DriverHelper.FactoryDriver(browser);
         }
     }
 }

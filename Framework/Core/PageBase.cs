@@ -20,11 +20,10 @@ namespace Core
             Browser.PageInit(driver, page);
         }
 
-        //public void Initializes()
-        //{
-        //    Browser.Initializes();
-        //    GoTo();
-        //}
+        public void KillDriverProcesses()
+        {
+            Browser.KillDriverProcesses();
+        }
 
         public void Action(Navigation.NavigationActions action)
         {

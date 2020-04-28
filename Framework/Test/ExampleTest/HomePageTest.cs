@@ -45,8 +45,9 @@ namespace Test.ExamplePageTest
         [TearDown]
         public void CleanUp()
         {
-            reportHelper.AddTestToReport(testContext);
+            reportHelper.AddTestToReport(testContext);            
             driver.Quit();
+            HomePage.KillDriverProcesses();
         }
     }
 }

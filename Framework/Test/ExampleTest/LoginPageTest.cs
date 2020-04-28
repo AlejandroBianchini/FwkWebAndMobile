@@ -35,6 +35,7 @@ namespace Test.ExamplePageTest
         {
             reportHelper.AddTestToReport(testContext);
             driver.Quit();
+            LoginPage.KillDriverProcesses();
         }
     }
 }

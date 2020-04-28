@@ -1,5 +1,4 @@
 ﻿using Core.Enums;
-using Core.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -17,6 +16,7 @@ namespace Core
     {
         private const String INTERNET_EXPLORER_DRIVER = "internetexplorerdriver";
         private const String CHROME_DRIVER = "chromedriver";
+        private const String FIREFOX_DRIVER = "geckodriver.exe";
         private const String INTERNET_EXPLORER_DRIVER_SERVER = "iedriverserver";
         public static IWebDriver webDriver;
 
@@ -54,10 +54,9 @@ namespace Core
         public static void Quit()
         {
             webDriver.Quit();
-            //KillDriverProcesses();
         }
 
-        private static void KillDriverProcesses()
+        public static void KillDriverProcesses()
         {
             var driverName = webDriver.GetType().Name.ToLower();
             string processName = String.Empty;
@@ -68,6 +67,9 @@ namespace Core
                     break;
                 case CHROME_DRIVER:
                     processName = CHROME_DRIVER;
+                    break;
+                case FIREFOX_DRIVER:
+                    processName = FIREFOX_DRIVER;
                     break;
             }
             if (!String.IsNullOrEmpty(processName))
