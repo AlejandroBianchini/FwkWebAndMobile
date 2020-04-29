@@ -77,7 +77,7 @@ namespace Core.Helpers
                 try
                 {
                     var _fileName = String.Format("errorTest_{0}_{1}", testName, DateTime.Now.ToString("yyyyMMdd_HHmm"));
-                    Browser.PrintScreen(_fileName, ScreenshotImageFormat.Jpeg, imgPath);
+                    CommonsFunctions.PrintScreen(_fileName, ScreenshotImageFormat.Jpeg, imgPath);
                     var file = ReporteImgPath + _fileName + "." + ScreenshotImageFormat.Jpeg;
                     test.Log(logstatus, "Snapshot below: " + test.AddScreenCaptureFromPath(file));
                 }
@@ -182,7 +182,7 @@ namespace Core.Helpers
         public void AddScreenCaptureToStep(string imageName, string details = "")
         {
             ConfigureDirectories();
-            Browser.PrintScreen(imageName, ScreenshotImageFormat.Jpeg, imgPath);
+            CommonsFunctions.PrintScreen(imageName, ScreenshotImageFormat.Jpeg, imgPath);
 
             List<string> imgDetails = new List<string>();
             imgDetails.Add(imageName + ".jpeg");

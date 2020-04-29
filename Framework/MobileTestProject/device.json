@@ -1,0 +1,28 @@
+{
+    "Android": {
+        "DeviceName": "Pixel 2 Pie 9.0 - API 28",
+        "PlatformName": "Android",
+        "PlatformVersion": "9.0",
+        "AppPackage": "com.android.calculator2",
+        "AppActivity": "com.android.calculator2.Calculator"
+
+        //    "PlatformName": "Android",
+        //    "PlatformVersion": "8",
+        //    "DeviceName": "My Device 2",
+        //    "AppPackage": "com.android.calculator2",
+        //    "AppActivity": "com.android.calculator2.Calculator"
+
+    },
+    "iOS": {
+        "PlatformName": "iOS",
+        "PlatformVersion": "11.0",
+        "DeviceName": "iPhone 7",
+        "AutomationName": "XCUITest",
+        "AppName": "/path/to/my.app"
+
+        //"PlatformName": "Android",
+        //"PlatformVersion": "10",
+        //"DeviceName": "Pixel 3 XL Q 10.0 - API 29",
+        //"BrowserName": "chrome"
+    }
+}

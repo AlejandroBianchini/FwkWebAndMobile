@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
@@ -8,12 +9,14 @@ namespace Core
 {
     public class AppSettingsConfiguration
     {
-        private string driverPath;
+        private string webDriverPath;
+        private string mobileDriverPath;
         private string webDriverType;
         private string headdless;
         private string htmlReportsPath;
         private string remoteDriver;
         private string remoteUrl;
+        private string urlHub;
 
         public AppSettingsConfiguration()
         {
@@ -26,16 +29,23 @@ namespace Core
             htmlReportsPath = appSetting["HtmlReportsPath"];
 
             appSetting = config.GetSection("DriverSection");
-            driverPath = appSetting["DriverPath"];
+            webDriverPath = appSetting["WebDriverPath"];
+            mobileDriverPath = appSetting["MobileDriverPath"];
             webDriverType = appSetting["WebDriverType"];
             headdless = appSetting["Headdless"];
             remoteDriver = appSetting["RemoteDriver"];
             remoteUrl = appSetting["RemoteUrl"];
+            urlHub = appSetting["UrlHub"];
         }
 
-        public string DriverPath
+        public string WebDriverPath
         {
-            get => driverPath;
+            get => webDriverPath;
+        }
+
+        public string MobileDriverPath
+        {
+            get => mobileDriverPath;
         }
 
         public string WebDriverType
@@ -61,6 +71,11 @@ namespace Core
         public string RemoteUrl
         {
             get => remoteUrl;
+        }
+
+        public string UrlHub
+        {
+            get => urlHub;
         }
     }
 }

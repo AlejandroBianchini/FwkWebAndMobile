@@ -17,57 +17,57 @@ namespace Core
 
         public void PageInit(IWebDriver driver, object page)
         {
-            Browser.PageInit(driver, page);
+            CommonsFunctions.PageInit(driver, page);
         }
 
         public void KillDriverProcesses()
         {
-            Browser.KillDriverProcesses();
+            CommonsFunctions.KillDriverProcesses();
         }
 
         public void Action(Navigation.NavigationActions action)
         {
-            Browser.Action(action);
+            CommonsFunctions.Action(action);
         }
 
         public void AceptarPopUp()
         {            
-            Browser.Alert.Accept();
+            CommonsFunctions.Alert.Accept();
         }
 
         public void CancelarPopUp()
         {
-            Browser.Alert.Dismiss();
+            CommonsFunctions.Alert.Dismiss();
         }
 
         public void GoTo()
         {
-            Browser.GoTo(Url);
+            CommonsFunctions.GoTo(Url);
         }
 
         public void Quit()
         {
-            Browser.Quit();
+            CommonsFunctions.Quit();
         }
 
         public void PrintScreen(String fileName, ScreenshotImageFormat imageFormat, String path = null)
         {
-            Browser.PrintScreen(fileName, imageFormat, path);
+            CommonsFunctions.PrintScreen(fileName, imageFormat, path);
         }
 
         public IWebElement ExplicitWait(Int32 time, Func<IWebDriver, IWebElement> explicitWaitFunc)
         {
-            return Browser.ExplicitWait(time, explicitWaitFunc);
+            return CommonsFunctions.ExplicitWait(time, explicitWaitFunc);
         }
 
         public bool ExplicitWait(Int32 time, Func<IWebDriver, bool> explicitWaitFunc)
         {
-            return Browser.ExplicitWait(time, explicitWaitFunc);
+            return CommonsFunctions.ExplicitWait(time, explicitWaitFunc);
         }
 
         public static bool FindElementIfExists(By by)
         {
-            return Browser.FindElementIfExists(by);
+            return CommonsFunctions.FindElementIfExists(by);
         }
 
         public IWebElement Find(By objeto)
@@ -77,49 +77,56 @@ namespace Core
 
         public IWebElement FindNestedElement(By objeto1, By objeto2)
         {
-            return (Browser.FindNestedElements(objeto1, objeto2));
+            return (CommonsFunctions.FindNestedElements(objeto1, objeto2));
         }
 
         public virtual void MoveToElement(IWebElement elem)
         {
-            Browser.MoveToElement(elem);
+            CommonsFunctions.MoveToElement(elem);
         }
 
         public virtual void JavaScript(String jav)
         {
-            Browser.Javas(jav);
+            CommonsFunctions.Javas(jav);
         }
 
         public static string PagesSource()
         {
-            return Browser.PageSource();
+            return CommonsFunctions.PageSource();
         }
 
         public virtual void Scroll(string i = null)
         {
-            Browser.Scroll(i);
+            CommonsFunctions.Scroll(i);
         }
+
+        #region MobileFunctions
+        public static void PressAndSwipe(IWebElement element, double porcent, int loop = 0)
+        {
+            MobileFunctions.PressAndSwipe(element, porcent, loop);
+        }
+        #endregion
 
         #region Windows
 
         public List<String> GetAllWindows()
         {
-            return Browser.GetAllWindows();
+            return CommonsFunctions.GetAllWindows();
         }
 
         public void SwitchToWindowByTitle(String title)
         {
-            Browser.SwitchToWindowByTitle(title);
+            CommonsFunctions.SwitchToWindowByTitle(title);
         }
 
         public void SwitchToWindowByUrl(String url)
         {
-            Browser.SwitchToWindowByUrl(url);
+            CommonsFunctions.SwitchToWindowByUrl(url);
         }
 
         public void SwitchToDefaultWindow()
         {
-            Browser.SwitchToDefaultContent();
+            CommonsFunctions.SwitchToDefaultContent();
         }
 
         #endregion
@@ -129,17 +136,17 @@ namespace Core
 
         public static void SwitchToDefaultFrame()
         {
-            Browser.SwitchToDefaultFrame();
+            CommonsFunctions.SwitchToDefaultFrame();
         }
 
         public void SwitchToFrame(String frameName)
         {
-            Browser.SwitchToFrame(frameName);
+            CommonsFunctions.SwitchToFrame(frameName);
         }
 
         public void SwitchToFrameElement(IWebElement frameName)
         {
-            Browser.SwitchToFrameElement(frameName);
+            CommonsFunctions.SwitchToFrameElement(frameName);
         }
 
 
