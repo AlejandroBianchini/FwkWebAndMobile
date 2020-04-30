@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Core.Enums;
 using OpenQA.Selenium;
 
@@ -55,14 +56,34 @@ namespace Core
             CommonsFunctions.PrintScreen(fileName, imageFormat, path);
         }
 
-        public IWebElement ExplicitWait(Int32 time, Func<IWebDriver, IWebElement> explicitWaitFunc)
+        public static IWebElement ExplicitWait(int time, ExpectedConditionsEnum expected, By by)
         {
-            return CommonsFunctions.ExplicitWait(time, explicitWaitFunc);
+            return CommonsFunctions.ExplicitWait(time, expected, by);
         }
 
-        public bool ExplicitWait(Int32 time, Func<IWebDriver, bool> explicitWaitFunc)
+        public static ReadOnlyCollection<IWebElement> ExplicitWait(ExpectedConditionsEnum expected, By by)
         {
-            return CommonsFunctions.ExplicitWait(time, explicitWaitFunc);
+            return CommonsFunctions.ExplicitWait(expected, by);
+        }
+
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, By by, string text = "")
+        {
+            return CommonsFunctions.ExplicitWait(time, expected, by, text);
+        }
+
+        public static IWebElement ExplicitWait(int time, ExpectedConditionsEnum expected, IWebElement element)
+        {
+            return CommonsFunctions.ExplicitWait(time, expected, element);
+        }
+
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, IWebElement element, string text = "")
+        {
+            return CommonsFunctions.ExplicitWait(time, expected, element, text);
+        }
+
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, string text)
+        {
+            return CommonsFunctions.ExplicitWait(time, expected, text);
         }
 
         public static bool FindElementIfExists(By by)
@@ -72,7 +93,7 @@ namespace Core
 
         public IWebElement Find(By objeto)
         {
-            return ExplicitWait(10, x => x.FindElement(objeto));
+            return ExplicitWait(3, ExpectedConditionsEnum.ElementExists, objeto);
         }
 
         public IWebElement FindNestedElement(By objeto1, By objeto2)
@@ -103,7 +124,7 @@ namespace Core
         #region MobileFunctions
         public static void PressAndSwipe(IWebElement element, double porcent, int loop = 0)
         {
-            MobileFunctions.PressAndSwipe(element, porcent, loop);
+            CommonsFunctions.PressAndSwipe(element, porcent, loop);
         }
         #endregion
 

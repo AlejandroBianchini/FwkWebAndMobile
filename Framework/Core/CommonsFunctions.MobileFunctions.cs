@@ -4,27 +4,9 @@ using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace Core
 {
-    public static class MobileFunctions
+    internal static partial class CommonsFunctions
     {
-        private static AppiumDriver<AppiumWebElement> mobileDriver = (AppiumDriver<AppiumWebElement>)CommonsFunctions.driver;
-
-        public static void Tap(this IWebElement element)
-        {            
-            TouchAction touchAction = new TouchAction(mobileDriver);
-            touchAction.Tap(element).Perform();
-        }
-
-        public static void LongPress(this IWebElement element)
-        {
-            TouchAction touchAction = new TouchAction(mobileDriver);
-            touchAction.LongPress(element).Perform();
-        }
-
-        public static void MoveTo(this IWebElement element)
-        {
-            TouchAction touchAction = new TouchAction(mobileDriver);
-            touchAction.MoveTo(element).Perform();
-        }
+        private static readonly AppiumDriver<AppiumWebElement> mobileDriver = (AppiumDriver<AppiumWebElement>)driver;
 
         public static void PressAndSwipe(IWebElement element, double porcent, int loop = 0)
         {

@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Extension;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using SeleniumExtras.PageObjects;

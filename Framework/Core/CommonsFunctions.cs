@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using Core.Enums;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
@@ -30,24 +28,11 @@ namespace Core
             }
         }   
 
-        public static void PageInit(IWebDriver driver, object page)
+        public static void PageInit(IWebDriver _driver, object page)
         {
-            CommonsFunctions.driver = driver;
+            driver = _driver;
             PageFactory.InitElements(CommonsFunctions.driver, page);
-        }
-
-        //private static Boolean IsMobile(this IWebDriver driver)
-        //{
-        //    if (driver.GetType().Name.Contains("Android") || driver.GetType().Name.Contains("iOS"))
-        //        return true;
-        //    else
-        //        return false;
-        //}
-
-        public static void GoTo(string url)
-        {
-            driver.Url = url;
-        }
+        }    
 
         public static void PrintScreen(string fileName, ScreenshotImageFormat imageFormat, string path = null)
         {
@@ -93,84 +78,7 @@ namespace Core
                     }
                 }
             }
-        }
-
-        public static IWebElement ExplicitWait(Int32 time, Func<IWebDriver, IWebElement> explicitWaitFunc)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
-            return wait.Until(explicitWaitFunc);
-        }
-
-        public static bool ExplicitWait(Int32 time, Func<IWebDriver, bool> explicitWaitFunc)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
-            return wait.Until(explicitWaitFunc);
-        }
-
-        public static bool FindElementIfExists(By by)
-        {
-            try
-            {
-                driver.FindElement(by);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        //public static void Initializes(bool maximized = true)
-        //{
-        //    try
-        //    {
-        //        if (maximized)
-        //            Browser.webDriver.Manage().Window.Maximize();
-        //    }
-        //    catch
-        //    {
-        //        webDriver = DriverHelper.FactoryDriver();
-        //        Initializes();
-        //    }
-        //}
-
-        public static void Action(Navigation.NavigationActions action)
-        {
-            switch (action)
-            {
-                case Navigation.NavigationActions.GoBack:
-                    driver.Navigate().Back();
-                    break;
-                case Navigation.NavigationActions.GoFoward:
-                    driver.Navigate().Forward();
-                    break;
-                case Navigation.NavigationActions.Refresh:
-                    driver.Navigate().Refresh();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public static void MoveToElement(IWebElement element)
-        {
-            Actions select = new Actions(driver);
-            select.MoveToElement(element).Click();
-            select.Perform();
-        }
-
-        /// <summary>
-        /// Close de current Window.
-        /// </summary>
-        public static void CloseWindows()
-        {
-            driver.Close();
-        }
-
-        public static void DefaultContent()
-        {
-            driver.SwitchTo().DefaultContent();
-        }
+        }   
 
         public static Boolean Javas(String jav)
         {
@@ -191,23 +99,18 @@ namespace Core
             return elemento;
         }
 
-        /// <summary>
-        /// Scroll in the current screen. Must be indicate the value in porcents. Positives values make scroll down and negatives values make scroll up (optional).
-        /// For default will make are scroll down of 50%.
-        /// </summary>
-        /// <param name="i"></param>
-        public static void Scroll(string i = null)
+        public static bool FindElementIfExists(By by)
         {
-            if (String.IsNullOrEmpty(i))
+            try
             {
-                i = "450";
+                driver.FindElement(by);
+                return true;
             }
-            else
+            catch (NoSuchElementException)
             {
-                i = Convert.ToString(10000 / Convert.ToInt32(i)); 
+                return false;
             }
-            Javas($"window.scrollBy(0,{i})");
-        }
+        }        
 
         public static string PageSource()
         {
@@ -216,94 +119,101 @@ namespace Core
 
         #region ExplicitWait
 
-        public static void ExplicitWait(int time, ExpectedConditionsEnum expected, By by, string text = "")
+        public static IWebElement ExplicitWait(int time, ExpectedConditionsEnum expected, By by)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
             switch (expected)
             {
                 case ExpectedConditionsEnum.ElementExists:
-                    wait.Until(ExpectedConditions.ElementExists(by));
-                    break;
+                    return wait.Until(ExpectedConditions.ElementExists(by));                    
                 case ExpectedConditionsEnum.ElementIsVisible:
-                    wait.Until(ExpectedConditions.ElementIsVisible(by));
-                    break;
+                    return wait.Until(ExpectedConditions.ElementIsVisible(by));                    
                 case ExpectedConditionsEnum.ElementToBeClickable:
-                    wait.Until(ExpectedConditions.ElementToBeClickable(by));
-                    break;
-                case ExpectedConditionsEnum.ElementToBeSelected:
-                    wait.Until(ExpectedConditions.ElementToBeSelected(by));
-                    break;
-                case ExpectedConditionsEnum.InvisibilityOfElementLocated:
-                    wait.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
-                    break;
-                case ExpectedConditionsEnum.InvisibilityOfElementWithText:
-                    wait.Until(ExpectedConditions.InvisibilityOfElementWithText(by, text));
-                    break;
+                    return wait.Until(ExpectedConditions.ElementToBeClickable(by));
+                default:
+                    throw new Exception("Condition Doesn't exist");
+            }
+        }
+
+        public static ReadOnlyCollection<IWebElement> ExplicitWait(ExpectedConditionsEnum expected, By by)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            switch (expected)
+            {
                 case ExpectedConditionsEnum.PresenceOfAllElementsLocatedBy:
-                    wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(by));
-                    break;
-                case ExpectedConditionsEnum.TextToBePresentInElementLocated:
-                    wait.Until(ExpectedConditions.TextToBePresentInElementLocated(by, text));
-                    break;
-                case ExpectedConditionsEnum.TextToBePresentInElementValue:
-                    wait.Until(ExpectedConditions.TextToBePresentInElementValue(by, text));
-                    break;
+                    return wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(by));
                 case ExpectedConditionsEnum.VisibilityOfAllElementsLocatedBy:
-                    wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(by));
-                    break;
+                    return wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(by));
                 default:
                     throw new Exception("Condition Doesn't exist");
             }
         }
 
-        public static void ExplicitWait(int time, ExpectedConditionsEnum expected, IWebElement element, string text = "")
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, By by, string text = "")
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
+            switch (expected)
+            {
+                case ExpectedConditionsEnum.ElementToBeSelected:
+                    return wait.Until(ExpectedConditions.ElementToBeSelected(by));
+                case ExpectedConditionsEnum.InvisibilityOfElementLocated:
+                    return wait.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
+                case ExpectedConditionsEnum.InvisibilityOfElementWithText:
+                    return wait.Until(ExpectedConditions.InvisibilityOfElementWithText(by, text));
+                case ExpectedConditionsEnum.TextToBePresentInElementLocated:
+                    return wait.Until(ExpectedConditions.TextToBePresentInElementLocated(by, text));
+                case ExpectedConditionsEnum.TextToBePresentInElementValue:
+                    return wait.Until(ExpectedConditions.TextToBePresentInElementValue(by, text));
+                default:
+                    throw new Exception("Condition Doesn't exist");
+            }
+        }
+
+        public static IWebElement ExplicitWait(int time, ExpectedConditionsEnum expected, IWebElement element)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
             switch (expected)
             {
                 case ExpectedConditionsEnum.ElementToBeClickable:
-                    wait.Until(ExpectedConditions.ElementToBeClickable(element));
-                    break;
-                case ExpectedConditionsEnum.ElementToBeSelected:
-                    wait.Until(ExpectedConditions.ElementToBeSelected(element));
-                    break;
-                case ExpectedConditionsEnum.StalenessOf:
-                    wait.Until(ExpectedConditions.StalenessOf(element));
-                    break;
-                case ExpectedConditionsEnum.TextToBePresentInElement:
-                    wait.Until(ExpectedConditions.TextToBePresentInElement(element, text));
-                    break;
-                case ExpectedConditionsEnum.TextToBePresentInElementValue:
-                    wait.Until(ExpectedConditions.TextToBePresentInElementValue(element, text));
-                    break;
+                    return wait.Until(ExpectedConditions.ElementToBeClickable(element));                                    
                 default:
                     throw new Exception("Condition Doesn't exist");
             }
         }
 
-        public static void ExplicitWait(int time, ExpectedConditionsEnum expected, string text)
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, IWebElement element, string text = "")
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
             switch (expected)
             {
-                case ExpectedConditionsEnum.FrameToBeAvailableAndSwitchToIt:
-                    wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(text));
-                    break;
+                case ExpectedConditionsEnum.ElementToBeSelected:
+                    return wait.Until(ExpectedConditions.ElementToBeSelected(element));
+                case ExpectedConditionsEnum.StalenessOf:
+                    return wait.Until(ExpectedConditions.StalenessOf(element));
+                case ExpectedConditionsEnum.TextToBePresentInElement:
+                    return wait.Until(ExpectedConditions.TextToBePresentInElement(element, text));
+                case ExpectedConditionsEnum.TextToBePresentInElementValue:
+                    return wait.Until(ExpectedConditions.TextToBePresentInElementValue(element, text));
+                default:
+                    throw new Exception("Condition Doesn't exist");
+            }
+        }
+
+        public static Boolean ExplicitWait(int time, ExpectedConditionsEnum expected, string text)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(time));
+            switch (expected)
+            {
                 case ExpectedConditionsEnum.TitleContains:
-                    wait.Until(ExpectedConditions.TitleContains(text));
-                    break;
+                    return wait.Until(ExpectedConditions.TitleContains(text));
                 case ExpectedConditionsEnum.TitleIs:
-                    wait.Until(ExpectedConditions.TitleIs(text));
-                    break;
+                    return wait.Until(ExpectedConditions.TitleIs(text));
                 case ExpectedConditionsEnum.UrlContains:
-                    wait.Until(ExpectedConditions.UrlContains(text));
-                    break;
+                    return wait.Until(ExpectedConditions.UrlContains(text));
                 case ExpectedConditionsEnum.UrlMatches:
-                    wait.Until(ExpectedConditions.UrlMatches(text));
-                    break;
+                    return wait.Until(ExpectedConditions.UrlMatches(text));
                 case ExpectedConditionsEnum.UrlToBe:
-                    wait.Until(ExpectedConditions.UrlToBe(text));
-                    break;
+                    return wait.Until(ExpectedConditions.UrlToBe(text));
                 default:
                     throw new Exception("Condition Doesn't exist");
             }
