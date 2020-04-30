@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
+﻿using Core;
+using NUnit.Framework;
 using PagesProject.MobilePages;
 using PagesProject.WebPages;
 
 namespace MobileTestProject.AndroidPages
 {
     [TestFixture]
-    public class AndroidCalculatorTest : AndroidBaseTest
+    public class AndroidCalculatorTest : MobileBaseTest
     {
         public TestContext testContext;
         AndroidCalculator androidCalculator;
@@ -15,7 +16,7 @@ namespace MobileTestProject.AndroidPages
         {
             testContext = TestContext.CurrentContext;
             report.StartTest(testContext);
-            driver = GetDriver();
+            driver = GetDriver(DriverType.Android);
             androidCalculator = new AndroidCalculator(driver);
         }
 
@@ -32,7 +33,7 @@ namespace MobileTestProject.AndroidPages
         {
             androidCalculator.RealizarSuma();
 
-            var _driver = GetWebDriver(CHROME_DRIVER);
+            var _driver = GetWebDriver(DriverType.Chrome);
             HomePage homePage = new HomePage(_driver);
 
             homePage.GoTo();

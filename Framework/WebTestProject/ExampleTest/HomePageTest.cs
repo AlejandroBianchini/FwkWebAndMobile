@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Core;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using PagesProject.MobilePages;
 using PagesProject.WebPages;
@@ -41,7 +42,7 @@ namespace WebTestProject.ExampleTest
             HomePage.GoTo();
             HomePage.BuscarGoogle("Segundo test");
             
-            var _driver = GetMobileDriver(ANDROID_DRIVER);
+            var _driver = GetMobileDriver(DriverType.Android);
             AndroidCalculator androidCalculator = new AndroidCalculator(_driver);
             androidCalculator.RealizarSuma();
             _driver.Quit();

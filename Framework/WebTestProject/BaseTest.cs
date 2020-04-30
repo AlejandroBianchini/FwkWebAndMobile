@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core;
 using Core.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -11,9 +12,6 @@ namespace WebTestProject
     [Parallelizable(ParallelScope.Fixtures)]
     public class BaseTest
     {
-        protected string ANDROID_DRIVER = "Android";
-        protected string IOS_DRIVER = "iOS";
-
         public ReportHelper reportHelper = new ReportHelper();
 
         [OneTimeSetUp]
@@ -30,7 +28,7 @@ namespace WebTestProject
 
         protected static IEnumerable<String> BrowserToRunWith()
         {
-            String[] browser = { "Chrome", "Firefox"};
+            String[] browser = { DriverType.Chrome, DriverType.Firefox, DriverType.IExplorer };
 
             foreach (String b in browser)
             {

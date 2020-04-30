@@ -7,21 +7,19 @@ namespace MobileTestProject.AndroidPages
 {
     [SetUpFixture]
     [Parallelizable(ParallelScope.Fixtures)]
-    public class AndroidBaseTest
+    public class MobileBaseTest
     {
         protected ReportHelper report = new ReportHelper();
-        private const string ANDROID_DRIVER = "Android";
-        protected const string CHROME_DRIVER = "Chrome";
         protected AppiumDriver<AppiumWebElement> driver;
 
-        public AppiumDriver<AppiumWebElement> GetDriver()
+        public AppiumDriver<AppiumWebElement> GetDriver(string type)
         {
-            return DriverHelper.FactoryMobileDriver(ANDROID_DRIVER);
+            return DriverHelper.FactoryMobileDriver(type);
         }
 
         public IWebDriver GetWebDriver(string browser)
         {
-            return DriverHelper.FactoryWebDriver(CHROME_DRIVER);
+            return DriverHelper.FactoryWebDriver(browser);
         }
 
         [OneTimeSetUp]
