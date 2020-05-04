@@ -17,7 +17,7 @@ namespace WebTestProject.ExampleTest
         public void Initialize()
         {
             testContext = TestContext.CurrentContext;
-            reportHelper.StartTest(testContext);                       
+            reportHelper.StartTest(testContext);                
         }
 
         [Test]               
@@ -29,6 +29,7 @@ namespace WebTestProject.ExampleTest
 
             HomePage.GoTo();
             HomePage.BuscarGoogle("Selenium");
+
             Assert.IsTrue(true);
         }
 
